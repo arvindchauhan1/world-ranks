@@ -4,6 +4,7 @@ import { http } from '../remote';
 const HomePage = () => {
     const [countries, setCountries] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [show, setShow] = useState('0')
 
     const fetchCountries = useCallback(async () => {
         const resp = await http.get(`all`)
@@ -21,33 +22,41 @@ const HomePage = () => {
             <div className="text-base font-medium">
                 Found&nbsp;{countries.length}&nbsp;countries
             </div>
-            <div className="flex w-1/2 justify-items-start h-12 content-cente relative">
+            <div className="flex sm:w-1/2 w-full  justify-items-start h-12 content-cente relative">
                 <span className='absolute h-full w-10 flex align-middle justify-center' >
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </span>
-                <input className='w-full p-4 pl-10 bg-gray-100 rounded-lg' placeholder='Filter by Name, Region, Subregion' type='text' />
+                <input className='w-full p-4 pl-10 bg-gray-100 rounded-xl' placeholder='Filter by Name, Region, Subregion' type='text' />
             </div>
         </div>
         <div className='container mt-12 w-full '>
-            <div className='w-full flex flex-row text-center text-gray-500 mb-6 opacity-60'>
+            <div className='w-full flex flex-row text-center text-gray-500 mb-6 opacity-60 my-3 p-3'>
+                <div className='sm:block flex-none w-14 h-9 hidden'></div>
                 <div className='flex-1 text-base font-medium'>Name</div>
-                <div className='flex-1 text-base font-medium'>Population</div>
-                <div className='flex-1 text-base font-medium'>Area (km  )</div>
-                <div className='flex-1 text-base font-medium'>Gini</div>
+                <div className='flex-1 sm:block hidden text-base font-medium'>Population</div>
+                <div className='flex-1 sm:block hidden text-base font-medium'>Area (km  )</div>
+                <div className='flex-1 sm:block hidden text-base font-medium'>Gini</div>
+                <div className='flex-1 sm:hidden block text-base font-medium'>
+                    <select defaultValue={show} onChange={(e) => setShow(e.target.value)}>
+                        <option value="0">Population</option>
+                        <option value="1">Area (km  )</option>
+                        <option value="2">Gini</option>
+                    </select>
+                </div>
             </div>
             {countries.map((country, index) => {
                 console.log(country)
                 return (
                     <div className='bg-white w-full flex my-3 p-3 rounded-xl text-center'>
-                        <div className='flex-none'>
-                        <img src={`${country.flags.svg}`} alt={`${country.flag}`} className='inline-block w-14 h-9' />
+                        <div className='flex-none sm:block hidden'>
+                            <img src={`${country.flags.svg}`} alt={`${country.flag}`} className='inline-block w-14 h-9' />
                         </div>
-                        <div className='flex-1 -ml-14'>{country.name.common}</div>
-                        <div className='flex-1'> {country.population}</div>
-                        <div className='flex-1'>{country.area}</div>
-                        <div className='flex-1'>gini</div>
+                        <div className='flex-1'>{country.name.common}</div>
+                        <div className={`flex-1 sm:block ${show === '0' ? '' : 'hidden'} `}> {country.population}</div>
+                        <div className={`flex-1 sm:block ${show === '1' ? '' : 'hidden'} `}>{country.area}</div>
+                        <div className={`flex-1 sm:block ${show === '2' ? '' : 'hidden'} `}>gini</div>
                     </div>
                 )
             })}
