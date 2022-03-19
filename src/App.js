@@ -10,7 +10,7 @@ import HomePage from './Pages/HomePage';
 
 const App = () => {
   return (
-    <><div className="lg:px-28 md:px-16 sm:px-12 px-6 bg-slate-100">
+    <><div className="lg:px-28 md:px-16 sm:px-12 px-6 bg-slate-50">
       <Router>
         <Header />
         <Routes>
