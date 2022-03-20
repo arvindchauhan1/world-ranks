@@ -51,9 +51,8 @@ const HomePage = () => {
                 </div>
             </div>
             {countries.map((country, index) => {
-                console.log(country)
                 return (
-                    <Link to={`${country.name.common}`}>
+                    <Link key={index} to={`${country.name.common}`}>
                         <div className='bg-white w-full flex my-3 p-3 rounded-xl text-center'>
                             <div className='flex-none sm:block hidden'>
                                 <img src={`${country.flags.svg}`} alt={`${country.flag}`} className='inline-block w-14 h-9 rounded-md object-cover' />

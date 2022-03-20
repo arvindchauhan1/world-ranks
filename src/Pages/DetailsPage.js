@@ -9,6 +9,7 @@ const DetailsPage = () => {
     const [loading, setLoading] = useState(true)
 
     const fetchNeighbouringCountries = useCallback(async (c) => {
+        if (c.borders === undefined) return
         try {
             const resp = await http.get(`alpha?codes=${c.borders !== undefined ? c.borders.map((b, i) => (b)) : "err"}`)
             await setNeighbouringCountries(resp.data === null ? {} : resp.data)
@@ -122,6 +123,19 @@ const DetailsPage = () => {
                 {/* break */}
                 <div className='text-left text-gray-400 mb-6'>
                     Neighbouring Countries
+                </div>
+                <div className='text-left'>
+                    {neighbouringCountries.length !== 0 ? neighbouringCountries.map((c, i) => {
+                        console.log(c)
+                        return (
+                            <span key={i} className='inline-block mr-7'>
+                                <img src={`${c.flags !== undefined ? c.flags.svg : ""}`} alt={`flag`} className='w-20 h-14 object-fill rounded' />
+                                <div className='my-2 text-xs font-normal text-center'>
+                                    {c.name !== undefined ? c.name.common : ''}
+                                </div>
+                            </span>
+                        )
+                    }) : ""}
                 </div>
             </div>
         </div>
