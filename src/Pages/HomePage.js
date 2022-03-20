@@ -10,7 +10,6 @@ const HomePage = () => {
     const fetchCountries = useCallback(async () => {
         try {
             const resp = await http.get(`all`)
-            console.log(resp)
             await setCountries(resp.data === null ? [] : resp.data)
         } catch (error) {
             console.log(error)
