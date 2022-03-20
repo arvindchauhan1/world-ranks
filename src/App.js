@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className="lg:px-28 md:px-16 sm:px-12 px-6 bg-slate-50">
+      <div className="lg:px-28 md:px-16 sm:px-12 px-6 bg-slate-100">
         <Router>
           <Routes>
             <Route path='/' element={<HomePage />} />
