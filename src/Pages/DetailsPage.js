@@ -5,13 +5,24 @@ import { http } from '../remote';
 const DetailsPage = () => {
     const { country } = useParams()
     const [countryData, setCountryData] = useState({});
+    const [neighbouringCountries, setNeighbouringCountries] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const fetchNeighbouringCountries = useCallback(async (c) => {
+        try {
+            const resp = await http.get(`alpha?codes=${c.borders !== undefined ? c.borders.map((b, i) => (b)) : "err"}`)
+            await setNeighbouringCountries(resp.data === null ? {} : resp.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
 
     const fetchCountryData = useCallback(async () => {
         try {
             const resp = await http.get(`name/${country}`)
-            console.log(resp.data[0])
+            console.log(resp.data === null ? {} : resp.data[0])
             await setCountryData(resp.data === null ? {} : resp.data[0])
+            await fetchNeighbouringCountries(resp.data === null ? {} : resp.data[0])
         } catch (error) {
             console.log(error)
         }
@@ -19,7 +30,7 @@ const DetailsPage = () => {
     }, [setCountryData, setLoading])
 
     useEffect(async () => {
-        fetchCountryData();
+        await fetchCountryData();
     }, [fetchCountryData])
 
     return <>
