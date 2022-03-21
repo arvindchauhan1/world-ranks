@@ -1,38 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { http } from '../remote';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const DetailsPage = () => {
+const DetailsPage = ({ countries }) => {
     const { country } = useParams()
-    const [countryData, setCountryData] = useState({});
-    const [neighbouringCountries, setNeighbouringCountries] = useState([])
-    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
 
-    const fetchNeighbouringCountries = useCallback(async (c) => {
-        if (c.borders === undefined) return
-        try {
-            const resp = await http.get(`alpha?codes=${c.borders !== undefined ? c.borders.map((b, i) => (b)) : "err"}`)
-            await setNeighbouringCountries(resp.data === null ? {} : resp.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
-
-    const fetchCountryData = useCallback(async () => {
-        try {
-            const resp = await http.get(`name/${country}`)
-            console.log(resp.data === null ? {} : resp.data[0])
-            await setCountryData(resp.data === null ? {} : resp.data[0])
-            await fetchNeighbouringCountries(resp.data === null ? {} : resp.data[0])
-        } catch (error) {
-            console.log(error)
-        }
-        setLoading(false)
-    }, [setCountryData, setLoading])
-
-    useEffect(async () => {
-        await fetchCountryData();
-    }, [fetchCountryData])
+    const countryData = countries.filter(c => c.name.common === country)[0];
+    const neighbouringCountries = countries.filter(c => countryData.borders !== undefined ? countryData.borders.includes(c.cca3) : false)
 
     return <>
         <div className="container w-full flex sm:flex-row flex-col text-center">
@@ -125,17 +99,16 @@ const DetailsPage = () => {
                     Neighbouring Countries
                 </div>
                 <div className='text-left'>
-                    {neighbouringCountries.length !== 0 ? neighbouringCountries.map((c, i) => {
-                        console.log(c)
-                        return (
-                            <span key={i} className='inline-block mr-7'>
-                                <img src={`${c.flags !== undefined ? c.flags.svg : ""}`} alt={`flag`} className='w-20 h-14 object-fill rounded' />
-                                <div className='my-2 text-xs font-normal text-center'>
-                                    {c.name !== undefined ? c.name.common : ''}
-                                </div>
-                            </span>
-                        )
-                    }) : ""}
+                    {neighbouringCountries.length !== 0 ? neighbouringCountries.map((c, i) => (
+                        <span key={i} className='inline-block mr-7 cursor-pointer hover:-translate-y-1 transition-transform ease-in' onClick={async () => {
+                            await navigate({ pathname: `../${c.name !== undefined ? c.name.common : ''}` }, { replace: true })
+                        }}>
+                            <img src={`${c.flags !== undefined ? c.flags.svg : ""}`} alt={`flag`} className='w-20 h-14 object-fill rounded' />
+                            <div className='my-2 text-xs font-normal text-center'>
+                                {c.name !== undefined ? c.name.common : ''}
+                            </div>
+                        </span>
+                    )) : ""}
                 </div>
             </div>
         </div>
