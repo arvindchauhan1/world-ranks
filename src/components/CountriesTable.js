@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+
 const orderBy = (countries, value, direction) => {
     if (direction === "asc") {
+        if (value === 'name') return [...countries].sort((a, b) => (a[value].common > b[value].common ? 1 : -1));
         return [...countries].sort((a, b) => (a[value] > b[value] ? 1 : -1));
     }
 
     if (direction === "desc") {
+        if (value === 'name') return [...countries].sort((a, b) => (a[value].common > b[value].common ? -1 : 1));
         return [...countries].sort((a, b) => (a[value] > b[value] ? -1 : 1));
     }
 
@@ -20,24 +23,26 @@ const SortArrow = ({ direction }) => {
 
     if (direction === "desc") {
         return (
-            <span className={` m-0`}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-                </svg>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline-block h-4 ml-3" viewBox="0 0 20 20" fill="currentColor">
+  <path fillRule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+</svg>
             </span >
         );
     } else {
         return (
-            <span className={` `}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
+            <span>
+
+<svg xmlns="http://www.w3.org/2000/svg" className="inline-block h-4 ml-3" viewBox="0 0 20 20" fill="currentColor">
+  <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+</svg>
             </span>
         );
     }
 };
 
 const CountriesTable = ({ countries }) => {
+    console.log(countries)
     const [show, setShow] = useState('0')
 
     const [direction, setDirection] = useState();
@@ -61,23 +66,36 @@ const CountriesTable = ({ countries }) => {
     };
 
     return (
-        <div className='container mt-12 w-full '>
+        <div className='container mt-12 w-full mb-16'>
             <div className='w-full flex flex-row text-center text-gray-500 mb-6 opacity-60 my-3 p-3'>
                 <div className='sm:block flex-none w-14 h-9 hidden'></div>
-                <button className='flex-1 text-base font-medium ' onClick={() => setValueAndDirection("name")}>
-                    <span>Name</span>
+                <button
+                    className='flex-1 text-base font-medium text-left ml-6 sm:m-0 sm:text-center'
+                    onClick={() => setValueAndDirection("name")}
+                >
+                    Name
                     {value === "name" && <SortArrow direction={direction} />}
                 </button>
-                <button className='flex-1 sm:block hidden text-base font-medium'>Population</button>
-                <button className='flex-1 sm:block hidden text-base font-medium'>Area (km  )</button>
-                <button className='flex-1 sm:block hidden text-base font-medium'>Gini</button>
-                <div className='flex-1 sm:hidden block text-base font-medium'>
-                    <select defaultValue={show} onChange={(e) => setShow(e.target.value)} className='bg-transparent outline-none ' >
-                        <option value="0" className='text-base font-medium'>Population</option>
-                        <option value="1" className='text-base font-medium'>Area (km  )</option>
-                        <option value="2" className='text-base font-medium'>Gini</option>
-                    </select>
-                </div>
+                <button
+                    className='flex-1 text-base font-medium'
+                    onClick={() => setValueAndDirection("population")}>
+                    Population
+                    {value === "population" && <SortArrow direction={direction} />}
+                </button>
+                <button
+                    className='flex-1 sm:block hidden text-base font-medium'
+                    onClick={() => setValueAndDirection("area")}
+                >
+                    Area (km  )
+                    {value === "area" && <SortArrow direction={direction} />}
+                </button>
+                <button
+                    className='flex-1 sm:block hidden text-base font-medium'
+                    onClick={() => setValueAndDirection("gini")}
+                >
+                    Gini
+                    {value === "gini" && <SortArrow direction={direction} />}
+                </button>
             </div>
             {orderedCountries.map((country, index) => {
                 return (
@@ -86,7 +104,7 @@ const CountriesTable = ({ countries }) => {
                             <div className='flex-none sm:block hidden'>
                                 <img src={`${country.flags.svg}`} alt={`${country.flag}`} className='inline-block w-14 h-9 rounded-md object-cover' />
                             </div>
-                            <div className='flex-1 text-base font-medium'>{country.name.common}</div>
+                            <div className='flex-1 text-base font-medium text-left ml-6 sm:m-0 sm:text-center'>{country.name.common}</div>
                             <div className={`flex-1 text-base font-medium sm:block ${show === '0' ? '' : 'hidden'} `}> {country.population}</div>
                             <div className={`flex-1 text-base font-medium sm:block ${show === '1' ? '' : 'hidden'} `}>{country.area}</div>
                             <div className={`flex-1 text-base font-medium sm:block ${show === '2' ? '' : 'hidden'} `}>gini</div>
