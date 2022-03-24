@@ -9,7 +9,7 @@ const DetailsPage = ({ countries }) => {
     const neighbouringCountries = countries.filter(c => countryData.borders !== undefined ? countryData.borders.includes(c.cca3) : false)
 
     return <>
-        <div className="container w-full flex sm:flex-row flex-col text-center">
+        <div className="container w-full flex sm:flex-row flex-col text-center mb-12">
             <div className='sm:mr-6'>
                 <div className="container p-7 bg-white rounded-xl sm:w-80 xl:w-96 mx-auto">
                     <img src={`${countryData.flags !== undefined ? countryData.flags.svg : ""}`} alt={`flag`} className='w-full h-full mx-auto mb-5 rounded-xl object-fill' />

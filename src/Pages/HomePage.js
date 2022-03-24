@@ -8,7 +8,7 @@ const HomePage = ({ countries }) => {
     const filteredCountries = countries.filter(country => country.subregion === undefined ? false : country.subregion.toLowerCase().includes(keyword) || country.name.common.toLowerCase().includes(keyword) || country.region.toLowerCase().includes(keyword));
 
     return <>
-        <div className="flex sm:flex-row flex-col justify-between space-y-5 sm:space-y-0 text-gray-500 mt-1">
+        <div className="flex sm:flex-row flex-col justify-between space-y-5 sm:space-y-0 text-gray-500 mt-2">
             <div className="text-base font-medium">
                 Found&nbsp;{filteredCountries.length}&nbsp;countries
             </div>
