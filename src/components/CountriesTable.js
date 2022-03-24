@@ -72,14 +72,14 @@ const CountriesTable = ({ countries }) => {
                 <button className='flex-1 sm:block hidden text-base font-medium'>Area (km  )</button>
                 <button className='flex-1 sm:block hidden text-base font-medium'>Gini</button>
                 <div className='flex-1 sm:hidden block text-base font-medium'>
-                    <select defaultValue={show} onChange={(e) => setShow(e.target.value)}>
+                    <select defaultValue={show} onChange={(e) => setShow(e.target.value)} className='bg-transparent outline-none ' >
                         <option value="0" className='text-base font-medium'>Population</option>
                         <option value="1" className='text-base font-medium'>Area (km  )</option>
                         <option value="2" className='text-base font-medium'>Gini</option>
                     </select>
                 </div>
             </div>
-            {countries.map((country, index) => {
+            {orderedCountries.map((country, index) => {
                 return (
                     <Link key={index} to={`${country.name.common}`}>
                         <div className='bg-white w-full flex my-3 p-3 rounded-xl text-center hover:-translate-y-1 transition-transform ease-in'>
