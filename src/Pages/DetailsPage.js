@@ -8,7 +8,8 @@ const DetailsPage = ({ countries }) => {
 
     const countryData = countries.filter(c => c.name.common === country)[0];
     const neighbouringCountries = countries.filter(c => countryData.borders !== undefined ? countryData.borders.includes(c.cca3) : false)
-
+    
+    window.scrollTo(0, 0)
     return <>
         <div className="container w-full flex sm:flex-row flex-col text-center mb-12">
             <div className='sm:mr-6'>
