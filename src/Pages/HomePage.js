@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import CountriesTable from '../components/CountriesTable';
 
 const HomePage = ({ countries }) => {
@@ -8,7 +7,7 @@ const HomePage = ({ countries }) => {
     const filteredCountries = countries.filter(country => country.subregion === undefined ? false : country.subregion.toLowerCase().includes(keyword) || country.name.common.toLowerCase().includes(keyword) || country.region.toLowerCase().includes(keyword));
 
     return <>
-        <div className="flex sm:flex-row flex-col justify-between space-y-5 sm:space-y-0 text-gray-500 mt-2">
+        <div className="flex sm:flex-row flex-col justify-between items-center space-y-5 sm:space-y-0 text-gray-500 mt-2">
             <div className="text-base font-medium">
                 Found&nbsp;{filteredCountries.length}&nbsp;countries
             </div>
@@ -18,7 +17,7 @@ const HomePage = ({ countries }) => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </span>
-                <input className='w-full p-4 pl-10 bg-gray-100 rounded-xl' placeholder='Filter by Name, Region, Subregion' type='text' value={keyword} onChange={(e) => setKeyword(e.target.value.toLowerCase())} />
+                <input className='w-full p-4 pl-10 bg-gray-200 rounded-xl outline-gray-400' placeholder='Filter by Name, Region, Subregion' type='text' value={keyword} onChange={(e) => setKeyword(e.target.value.toLowerCase())} />
             </div>
         </div>
         <CountriesTable countries={filteredCountries} />

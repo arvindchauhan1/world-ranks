@@ -17,3 +17,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.progress-bar {
+  height: 6px;
+}
+
+.logo-bar {
+  height: 5px;
+}
+
+.loader {
+  border-top-color: #3498db;
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.footer {
+  -webkit-box-shadow: 0px -4px 16px 0px rgb(241,245,249);
+  -moz-box-shadow: 0px -4px 16px 0px rgb(241,245,249);
+  box-shadow: 0px -4px 16px 0px rgb(241,245,249);
+}

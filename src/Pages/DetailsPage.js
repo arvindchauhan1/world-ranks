@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ProgressBar from '../components/ProgressBar';
 
 const DetailsPage = ({ countries }) => {
     const { country } = useParams()
@@ -11,7 +12,7 @@ const DetailsPage = ({ countries }) => {
     return <>
         <div className="container w-full flex sm:flex-row flex-col text-center mb-12">
             <div className='sm:mr-6'>
-                <div className="container p-7 bg-white rounded-xl sm:w-80 xl:w-96 mx-auto">
+                <div className="container p-7 bg-white rounded-xl sm:w-80 xl:w-96 mx-auto sm:hover:drop-shadow-xl transition-all ease-in-out">
                     <img src={`${countryData.flags !== undefined ? countryData.flags.svg : ""}`} alt={`flag`} className='w-full h-full mx-auto mb-5 rounded-xl object-fill' />
                     <div className='text-center text-3xl font-semibold text-gray-600 sm:text-gray-900 mb-2' >
                         {countryData.name !== undefined ? countryData.name.common : ''}
@@ -31,7 +32,7 @@ const DetailsPage = ({ countries }) => {
                     </div>
                 </div>
             </div>
-            <div className='container bg-white sm:ml-6 mt-12 sm:mt-0 rounded-xl text-sm font-medium sm:p-7 sm:px-10 p-7'>
+            <div className='container bg-white sm:ml-6 mt-12 sm:mt-0 rounded-xl text-sm font-medium sm:p-7 sm:px-10 p-7 sm:hover:drop-shadow-xl transition-all ease-in-out '>
                 <div className='text-left text-lg mb-5'>
                     Details
                 </div>
@@ -90,7 +91,7 @@ const DetailsPage = ({ countries }) => {
                         Gini
                     </div>
                     <div className='text-gray-800'>
-                        {countryData.name !== undefined ? countryData.name.common : ''}
+                        <ProgressBar value={countryData.gini !== undefined ? Object.values(countryData.gini)[0] : null} />
                     </div>
                 </div>
                 <hr className='-mx-7 mt-5 mb-12' />
@@ -100,7 +101,7 @@ const DetailsPage = ({ countries }) => {
                 </div>
                 <div className='text-left'>
                     {neighbouringCountries.length !== 0 ? neighbouringCountries.map((c, i) => (
-                        <span key={i} className='inline-block mr-7 cursor-pointer hover:-translate-y-1 transition-transform ease-in' onClick={async () => {
+                        <span key={i} className='inline-block mr-7 cursor-pointer hover:-translate-y-0.5 transition-transform ease-in' onClick={async () => {
                             await navigate({ pathname: `../${c.name !== undefined ? c.name.common : ''}` }, { replace: true })
                         }}>
                             <img src={`${c.flags !== undefined ? c.flags.svg : ""}`} alt={`flag`} className='w-20 h-14 object-fill rounded' />
@@ -108,7 +109,7 @@ const DetailsPage = ({ countries }) => {
                                 {c.name !== undefined ? c.name.common : ''}
                             </div>
                         </span>
-                    )) : ""}
+                    )) : `${countryData.name.common} is an island Country`}
                 </div>
             </div>
         </div>

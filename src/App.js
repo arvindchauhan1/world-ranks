@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { http } from './remote';
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,19 +14,21 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true)
   const fetchCountries = useCallback(async () => {
-    try {
-      const resp = await http.get(`all`)
-      await setCountries(resp.data === null ? [] : resp.data)
-    } catch (error) {
-      console.log(error)
-    }
-    setLoading(false)
+    fetch(`https://restcountries.com/v3.1/all`)
+      .then((res) => {
+        if (res.ok) return res.json()
+      })
+      .then((data) => setCountries(data))
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => setLoading(false))
   }, [setCountries, setLoading])
 
   useEffect(() => {
     fetchCountries();
   }, [fetchCountries])
-  
+
   return (
     <>
       <>
