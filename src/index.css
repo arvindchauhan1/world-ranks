@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Rubik:wght@700&display=swap");
 
 body {
   margin: 0;
@@ -20,6 +20,10 @@ code {
 
 .progress-bar {
   height: 6px;
+}
+
+#header {
+  font-family: "Rubik", sans-serif;
 }
 
 .logo-bar {
@@ -51,7 +55,7 @@ code {
 }
 
 .footer {
-  -webkit-box-shadow: 0px -4px 16px 0px rgb(241,245,249);
-  -moz-box-shadow: 0px -4px 16px 0px rgb(241,245,249);
-  box-shadow: 0px -4px 16px 0px rgb(241,245,249);
+  -webkit-box-shadow: 0px -4px 16px 0px rgb(241, 245, 249);
+  -moz-box-shadow: 0px -4px 16px 0px rgb(241, 245, 249);
+  box-shadow: 0px -4px 16px 0px rgb(241, 245, 249);
 }
