@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar';
 const orderBy = (countries, value, direction) => {
     if (direction === "asc") {
         if (value === 'name') return [...countries].sort((a, b) => (a[value].common > b[value].common ? 1 : -1));
-        if (value = 'gini') return [...countries].sort((a, b) => {
+        if (value === 'gini') return [...countries].sort((a, b) => {
             if (a[value] === undefined) {
                 return 1
             }
@@ -20,7 +20,7 @@ const orderBy = (countries, value, direction) => {
 
     if (direction === "desc") {
         if (value === 'name') return [...countries].sort((a, b) => (a[value].common > b[value].common ? -1 : 1));
-        if (value = 'gini') return [...countries].sort((a, b) => {
+        if (value === 'gini') return [...countries].sort((a, b) => {
             if (a[value] === undefined) {
                 return 1
             }
