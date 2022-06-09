@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const navigate = useNavigate()
   return <>
     <Link to='../'>
       <div id="header" className="sticky z-10 top-0 text-center pt-9 pb-2 mb-7 sm:mb-12 bg-slate-100 shadow-xl shadow-slate-100 flex justify-center items-center">
